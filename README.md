@@ -1,4 +1,4 @@
-# Log4jForSelenium
+# Log4j Config YAML file For Selenium Java Framework
 Log 4j Yaml file for adding and saving logs to Selenium Framework 
 
 # For GRADLE. In Build.Gradle include the following Dependencies:
