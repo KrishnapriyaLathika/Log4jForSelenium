@@ -1,0 +1,57 @@
+#---------------------------------------------------------------------------------------------------------------------------------
+# Log4j Properties Yaml file for generation and saving of Log files per execution
+# Created By: Krishnapriya
+# Version: 1.0
+#---------------------------------------------------------------------------------------------------------------------------------
+Configuration:
+  Name: Default
+  status: info
+
+  Properties:
+    property:
+      -
+        name: "DefaultPattern"
+        value: "%d{yyyy-MM-dd HH:mm:ss.SSS} | [%t] %14.16p - %M() - %m%n%throwable{short.lineNumber}"
+      -
+        name: "LogDir"
+        value: "reports/log_report"
+      -
+        name: "LogName"
+        value: "LogReport"
+      -
+        name: "LogLevel"
+        value: "DEBUG"
+
+  Appenders:
+    Console:
+      name: CONSOLE
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: ${DefaultPattern}
+
+    RollingFile:
+      name: FILEOUTPUT
+      fileName: ${LogDir}/${LogName}.log
+      filePattern: ${LogDir}/${LogName}_%d{yyyy-MM-dd}.log #For Saving Log Report and in subsequent runs the logs are saved in Rolling log file for the same day
+#      filePattern: ${LogDir}/${LogName}_%d{yyyy-MM-dd}--%i.log #For Saving Multiple Rolling logs for same same day
+      PatternLayout:
+        Pattern: ${DefaultPattern}
+      Policies:
+        OnStartupTriggeringPolicy: {}
+        TimeBasedTriggeringPolicy:
+          interval: 1
+          modulate: true
+
+  Loggers:
+    Root:
+      level: ${LogLevel}
+      AppenderRef:
+        - ref: CONSOLE
+
+    logger:
+      - name: com.automation
+        additivity: false
+        level: ${LogLevel}
+        AppenderRef:
+          - ref: CONSOLE
+          - ref: FILEOUTPUT
